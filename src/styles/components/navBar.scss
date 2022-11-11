@@ -1,0 +1,13 @@
+#navbar {
+  height: 50px;
+  width: 100%;
+  border: solid 2px $geo-green;
+  background-color: black;
+
+  display: flex;
+  justify-content: center;
+
+  a {
+    text-align: center;
+  }
+}

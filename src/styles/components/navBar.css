@@ -1,0 +1,16 @@
+#navbar {
+  height: 50px;
+  width: 100%;
+  border: solid 2px orange;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#navbar a {
+  text-align: center;
+}
+/*# sourceMappingURL=navBar.css.map */

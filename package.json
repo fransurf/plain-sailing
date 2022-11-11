@@ -15,7 +15,8 @@
     "react-scripts": "5.0.1",
     "sass": "^1.56.1",
     "web-vitals": "^2.1.4",
-    "serve": "^13.0.2"
+    "serve": "^13.0.2",
+    "mapbox-gl": "^2.8.2"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,53 +1,7 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@import './variables.scss';
+@import './base.scss';
+@import './components/navBar.scss';
+@import './components/mapVessels.scss';
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 
-h1 {
-  text-align: center;
-  padding: 20px;
 
-}
-
-.map-container {
-  display: flex;
-  justify-content: space-around;
-
-  .map-box {
-    border: solid blue 3px;
-    width: 60%;
-    height: 50vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    #map {
-      width: 45vw;
-      height: 45vw;
-      border: solid greenyellow 3px;
-      border-radius: 50%;
-    }
-  }
-  .map-search {
-    border: solid violet 3px;
-    width: 30%;
-    .map-search-content {
-      border: solid red;
-      // fits exactly within container div accounting for borders
-      width: calc(100% - 6px);
-      height: calc(100% - 6px);
-    }
-
-    h2 {
-      text-align: center;
-    }
-  }
-}
