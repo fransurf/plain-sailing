@@ -1,6 +1,6 @@
 import React from 'react'
 
-import GeoLogo from '../assets/g-logo.png'
+import GeoLogo from '../assets/logos/g-logo.png'
 
 const NavBar = () => {
 

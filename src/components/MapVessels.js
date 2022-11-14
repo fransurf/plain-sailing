@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
-// import axios from 'axios'
+import axios from 'axios'
 
 import Container from 'react-bootstrap/Container'
 
@@ -10,13 +10,19 @@ import vesselsGeoJSONObj from '../helpers/DataToGeoJson'
 import vesselInfo from '../data/Vessel0info'
 import vesselHistory from '../data/Vessel0history'
 
+import CountryFlags from '../helpers/GetFlags'
+
 // * Mapbox interactive functions
 // import { flyToVessel, recentreMap, displayPopUp } from '../helpers/MapFunctions.js'
 
 import mapboxgl from '!mapbox-gl' // eslint-disable-line import/no-webpack-loader-syntax
 mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbnN1cmYiLCJhIjoiY2wzOGxjZjNhMDB6bjNsbzE2NTN0MWhlMCJ9.fe6K99Y7XfdIZ2sd1xpAJA'
 
+
+
 const MapVessels = () => {
+
+  // CountryFlags()
 
   console.log('Heres the info for Vessel[0] -->', vesselInfo)
   console.log('Heres what Vessel[0] has been up to -->', vesselHistory)
@@ -168,6 +174,7 @@ const MapVessels = () => {
       .setHTML(`<h3>Vessel No.${currentFeature.properties.name.match(/\d+/)[0]}</h3><h4>Coordinates (${currentFeature.properties.lat.toFixed(2)}, ${currentFeature.properties.long.toFixed(2)})</h4>`)
       .addTo(map.current)
   }
+
 
   return (
     <Container id="mapbox-container" className='map-search-content'>
