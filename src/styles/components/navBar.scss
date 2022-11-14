@@ -1,11 +1,12 @@
 #navbar {
-  height: 50px;
+  height: 60px;
   width: 100%;
   border: solid 2px $geo-green;
   background-color: black;
 
   display: flex;
   justify-content: center;
+  align-items: center;
 
   a {
     text-align: center;

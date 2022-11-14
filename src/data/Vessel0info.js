@@ -1,4 +1,4 @@
-{
+const vesselInfo = {
   "mmsi": 235104277,
   "timestamp": "2022-08-04 16:00:00+00:00",
   "lat": 50.8946266667,
@@ -15,3 +15,5 @@
   "width": 8,
   "length": 40
 }
+
+export default vesselInfo

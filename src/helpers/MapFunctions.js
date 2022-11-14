@@ -95,8 +95,9 @@
 //   }
 // }
 
-// // * INTERACTIVE FUNCTIONS
-// // Centre on clicked feature
+
+// * INTERACTIVE FUNCTIONS
+// Centre on clicked feature
 // export const flyToVessel = (currentFeature) => {
 //   map.flyTo({
 //     center: currentFeature.geometry.coordinates,

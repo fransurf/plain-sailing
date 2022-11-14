@@ -18,7 +18,7 @@ const vesselsGeoJSONObj = {
   "features": [...vesselsGeoJSON]
 }
 
-console.log('vesselsGeoJSON --->', vesselsGeoJSON)
-console.log('vesselsGeoJSONObj --->', vesselsGeoJSONObj)
+// console.log('vesselsGeoJSON --->', vesselsGeoJSON)
+// console.log('vesselsGeoJSONObj --->', vesselsGeoJSONObj)
 
 export default vesselsGeoJSONObj
