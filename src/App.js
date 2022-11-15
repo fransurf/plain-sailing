@@ -14,7 +14,7 @@ function App() {
   return (
     <main className='page-container'>
       <NavBar />
-      <h1 className='page-title'> ⚓️🚢 --- Plain Sailing --- 🚢⚓️ </h1>
+      <h1 className='page-title'> Plain Sailing: <span>we're taking the sea-nic route</span></h1>
       <MapVessels />
       {/* <VesselInfo /> */}
     </main>

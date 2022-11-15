@@ -25,8 +25,8 @@ const MapVessels = () => {
 
   // console.log('Heres the info for Vessel[0] -->', vesselInfo)
   // console.log('Heres what Vessel[0] has been up to -->', vesselHistory)
-  console.log('vesselsGeoJSONObj --->', vesselsGeoJSONObj)
-  console.log('historyGeoJSONObj --->', historyGeoJSONObj)
+  // console.log('vesselsGeoJSONObj --->', vesselsGeoJSONObj)
+  // console.log('historyGeoJSONObj --->', historyGeoJSONObj)
 
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -61,7 +61,7 @@ const MapVessels = () => {
         type: 'geojson',
         data: historyGeoJSONObj
       })
-      addHistory()
+      
       vesselsList(vesselsGeoJSONObj)
       addMarker()
       vesselsList()
@@ -78,6 +78,13 @@ const MapVessels = () => {
       el.id = `marker-${marker.properties.mmsi}`
       el.className = 'marker'
 
+      // * Adds specific 'type' class for individual marker img
+      for (const info of vesselInfo) {
+        if (marker.properties.name === info.name) {
+          el.className = `marker marker-${info.type.replace(/\s/g, '')}`
+        }
+      }
+
       new mapboxgl.Marker(el, { offset: [0, -23] })
         .setLngLat(marker.geometry.coordinates)
         .addTo(map.current)
@@ -87,10 +94,10 @@ const MapVessels = () => {
         flyToVessel(marker)
         displayPopUp(marker)
 
+        // Add/remove 'active' class
         const activeItem = document.getElementsByClassName('active')
         e.current.stopPropagation()
         if (activeItem[0]) activeItem[0].classList.remove('active')
-
         const listing = document.getElementById(`listing-${marker.properties.mmsi}`)
         listing.classList.add('active')
       })
