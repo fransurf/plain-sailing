@@ -124,13 +124,14 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 }
 
 .mapboxgl-popup-content h3 {
-  background: #91c949;
+  background: $geo-blue;
   color: #fff;
   margin: 0;
   padding: 10px;
   border-radius: 3px 3px 0 0;
   font-weight: 700;
   margin-top: -15px;
+  // border: 2px solid #7bdcb5;
 }
 
 .mapboxgl-popup-content h4 {
@@ -148,7 +149,7 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
 }
 
 .mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
-  border-bottom-color: #91c949;
+  border-bottom-color: #7bdcb5;
 }
 
 
@@ -161,6 +162,18 @@ gets 2/3 of the page. You can adjust this to your personal liking. */
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.history-marker active-history {
+  border: solid green 2px;
+  cursor: pointer;
+  height: 56px;
+  width: 56px;
+  background-image: url('../../assets/ships/ship.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+
 
 /* Adjust popup for height of marker */
 .mapboxgl-popup {

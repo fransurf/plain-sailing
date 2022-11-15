@@ -1,6 +1,6 @@
 import vessels from '../data/VesselData.js'
 
-// * Function to create GeoJSON with 'coordinates' KVP & order vessels 0-9
+// * Map to create GeoJSON with 'coordinates' KVP & order vessels 0-9
 const vesselsGeoJSON = vessels.map(ship => {
   return {
     type: "Feature",
@@ -12,7 +12,7 @@ const vesselsGeoJSON = vessels.map(ship => {
   }
 }).sort((a, b) => (a.properties.name > b.properties.name ? 1 : -1))
 
-// * Function to create mapbox data structure
+// * Data to Mapbox structure
 const vesselsGeoJSONObj = {
   "type": "FeatureCollection",
   "features": [...vesselsGeoJSON]
@@ -20,5 +20,6 @@ const vesselsGeoJSONObj = {
 
 // console.log('vesselsGeoJSON --->', vesselsGeoJSON)
 // console.log('vesselsGeoJSONObj --->', vesselsGeoJSONObj)
+
 
 export default vesselsGeoJSONObj

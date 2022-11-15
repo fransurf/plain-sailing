@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container'
 
 // * Vessels data transformed to geojson/mapbox obj and ordered by vessesl name
 import vesselsGeoJSONObj from '../helpers/DataToGeoJson'
+import historyGeoJSONObj from '../helpers/HistoryToGeoJson'
 import vesselInfo from '../data/Vessel0info'
 import vesselHistory from '../data/Vessel0history'
 
@@ -18,14 +19,14 @@ import CountryFlags from '../helpers/GetFlags'
 import mapboxgl from '!mapbox-gl' // eslint-disable-line import/no-webpack-loader-syntax
 mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbnN1cmYiLCJhIjoiY2wzOGxjZjNhMDB6bjNsbzE2NTN0MWhlMCJ9.fe6K99Y7XfdIZ2sd1xpAJA'
 
-
-
 const MapVessels = () => {
 
   // CountryFlags()
 
   // console.log('Heres the info for Vessel[0] -->', vesselInfo)
   // console.log('Heres what Vessel[0] has been up to -->', vesselHistory)
+  console.log('vesselsGeoJSONObj --->', vesselsGeoJSONObj)
+  console.log('historyGeoJSONObj --->', historyGeoJSONObj)
 
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -45,23 +46,32 @@ const MapVessels = () => {
     map.current.addControl(new mapboxgl.NavigationControl())
   });
 
+  // * Map layers
   useEffect(() => {
     if (!map.current) return
-
+    // * All vessel locations layer
     map.current.on('load', () => {
       map.current.addSource('places', {
         type: 'geojson',
         data: vesselsGeoJSONObj
       })
+
+      // * History markers layer
+      map.current.addSource('history', {
+        type: 'geojson',
+        data: historyGeoJSONObj
+      })
+      addHistory()
       vesselsList(vesselsGeoJSONObj)
       addMarker()
       vesselsList()
+
     })
   })
 
+
   // * Function to add custom markers to map at vessel locations
   const addMarker = () => {
-
     for (const marker of vesselsGeoJSONObj.features) {
       // Create a div with marker-mmsi id and marker class
       const el = document.createElement('div')
@@ -84,6 +94,19 @@ const MapVessels = () => {
         const listing = document.getElementById(`listing-${marker.properties.mmsi}`)
         listing.classList.add('active')
       })
+    }
+  }
+
+  // * Function to add custom markers to map at vessel locations
+  const addHistory = () => {
+    for (const historyMarker of historyGeoJSONObj.features) {
+      const el = document.createElement('div')
+      el.className = `history-marker`
+      el.id = `history-${historyMarker.mmsi}`
+
+      new mapboxgl.Marker(el, { offset: [0, -23] })
+        .setLngLat(historyMarker.geometry.coordinates)
+        .addTo(map.current)
     }
   }
 
@@ -124,16 +147,8 @@ const MapVessels = () => {
         }
       }
       const location = details.appendChild(document.createElement('p'))
-      // const speed = details.appendChild(document.createElement('p'))
       location.innerHTML = `Last recorded at ${vessel.properties.lat.toFixed(2)}°N, ${vessel.properties.long.toFixed(2)}°E on ${useableDate}`
-      // if (vessel.properties.speed >= 0.1) {
-      //   speed.innerHTML = `Travelling: ${vessel.properties.speed} knots, heading ${vessel.properties.heading}°N`
-      // } else {
-      //   speed.innerHTML = 'This vessel was stationary'
-      // }
       location.classList.add('vessel-details', 'location')
-      // speed.classList.add('vessel-details', 'location')
-
 
       // Handle click on link
       link.addEventListener('click', function () {
@@ -175,6 +190,18 @@ const MapVessels = () => {
       const popUps = document.getElementsByClassName('mapboxgl-popup')
       if (popUps[0]) popUps[0].remove()
     })
+
+    // ! ATTEMPT AT BUTTON CLOSE
+    // const closeButtons = document.getElementsByClassName('mapboxgl-popup-close-button')
+    // for (const button of closeButtons){
+    //   button.addEventListener('click', () => {
+    //     console.log('⭐️ clicked')
+    //     map.current.flyTo({
+    //       center: [-3.0370, 53.8167],
+    //       zoom: 5,
+    //     })
+    //   })
+    // }
   }
 
   // Display popup & remove existing popup
@@ -182,31 +209,48 @@ const MapVessels = () => {
     const popUps = document.getElementsByClassName('mapboxgl-popup')
     if (popUps[0]) popUps[0].remove()
 
+    // * Add popup details
     const popup = new mapboxgl.Popup({ closeOnClick: false })
       .setLngLat(currentFeature.geometry.coordinates)
       .setHTML(`<h3>Vessel No.${currentFeature.properties.name.match(/\d+/)[0]}</h3>
-      <h4><b>Coordinates:</b> ${currentFeature.properties.lat.toFixed(2)}°N, ${currentFeature.properties.long.toFixed(2)}°E</h4><h4><b>Travelling:</b> ${currentFeature.properties.speed} knots, heading ${currentFeature.properties.heading}°N`)
+      <h4><b>Coordinates:</b> ${currentFeature.properties.lat.toFixed(2)}°N, ${currentFeature.properties.long.toFixed(2)}°E</h4>
+      <h4><b>Travelling:</b> ${currentFeature.properties.speed} knots, heading ${currentFeature.properties.heading}°N</h4>
+      <h4><a href='/' className='show-history'>See history</a></h4>`)
       .addTo(map.current)
 
+    // ! Attempt at displaying history
+    // const displayHistory = () => {
+    //   const showHistory = document.getElementsByClassName('show-history')
+    //   for (const history of showHistory){
+    //     showHistory.addEventListener('click', (e) => {
+    //       map.current.flyTo({
+    //         center: [-3.0370, 53.8167],
+    //         zoom: 5,
+    //       })
+    //       console.log('WHY ARENT YOU ADDING MY HISTORY MARKERS??')
+    //       displayHistory()
+    //     })
+    //   }
+    // }
+    
     // ! Attempt at placing if statement for stationary vessels
-    const popUpsContent = document.getElementsByClassName('mapboxgl-popup-content')
-    console.log('this is mmy popup content --->', popUpsContent)
-    const speed = popUpsContent.appendChild(document.createElement('p'))
-    if (currentFeature.properties.speed >= 0.1) {
-      speed.innerHTML = `Travelling: ${currentFeature.properties.speed} knots, heading ${currentFeature.properties.heading}°N`
-    } else {
-      speed.innerHTML = 'Travelling: This vessel was stationary'
-    }
-    console.log('this is mmy popup content --->', popUpsContent)
+    // const popUpsContent = document.getElementsByClassName('mapboxgl-popup-content')
+    // console.log('this is mmy popup content --->', popUpsContent)
+    // const speed = popUpsContent.appendChild(document.createElement('p'))
+    // if (currentFeature.properties.speed >= 0.1) {
+    //   speed.innerHTML = `Travelling: ${currentFeature.properties.speed} knots, heading ${currentFeature.properties.heading}°N`
+    // } else {
+    //   speed.innerHTML = 'Travelling: This vessel was stationary'
+    // }
+    // console.log('this is mmy popup content --->', popUpsContent)
 
-
-
-    // SET FLAG!!!
+    // ! SET FLAG!!!
     // for (const info of vesselInfo) {
     //   if (currentFeature.properties.name === info.name) {
     //   }
     // }
   }
+
 
 
   return (
