@@ -10,8 +10,6 @@ import vesselsGeoJSONObj from '../helpers/DataToGeoJson'
 import historyGeoJSONObj from '../helpers/HistoryToGeoJson'
 import vesselInfo from '../data/Vessel0info'
 
-import CountryFlags from '../helpers/GetFlags'
-
 // * Mapbox interactive functions
 // import { flyToVessel, recentreMap, displayPopUp } from '../helpers/MapFunctions.js'
 
@@ -19,13 +17,6 @@ import mapboxgl from '!mapbox-gl' // eslint-disable-line import/no-webpack-loade
 mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbnN1cmYiLCJhIjoiY2wzOGxjZjNhMDB6bjNsbzE2NTN0MWhlMCJ9.fe6K99Y7XfdIZ2sd1xpAJA'
 
 const MapVessels = () => {
-
-  // CountryFlags()
-
-  // console.log('Heres the info for Vessel[0] -->', vesselInfo)
-  // console.log('Heres what Vessel[0] has been up to -->', vesselHistory)
-  // console.log('vesselsGeoJSONObj --->', vesselsGeoJSONObj)
-  // console.log('historyGeoJSONObj --->', historyGeoJSONObj)
 
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -63,12 +54,12 @@ const MapVessels = () => {
 
       vesselsList(vesselsGeoJSONObj)
       addMarker()
-      vesselsList()
+
     })
   })
 
 
-  // * CUSTOM MARKERS FOR ALL VESSE LOCATIONS
+  // * CUSTOM MARKERS FOR ALL VESSEL LOCATIONS
   const addMarker = () => {
     for (const marker of vesselsGeoJSONObj.features) {
       // Create a div with marker-mmsi id and marker class
@@ -235,14 +226,6 @@ const MapVessels = () => {
   //     })
   //   }
   // }
-
-
-  // ! SET FLAG!!!
-  // for (const info of vesselInfo) {
-  //   if (currentFeature.properties.name === info.name) {
-  //   }
-  // }
-
 
   return (
     <Container id="mapbox-container" className='map-search-content'>

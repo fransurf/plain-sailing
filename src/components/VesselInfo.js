@@ -1,26 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
-
-// * Vessels data transformed to geojson/mapbox obj and ordered by vessesl name
-import vesselsGeoJSONObj from '../helpers/DataToGeoJson'
-import vesselInfo from '../data/Vessel0info'
-import vesselHistory from '../data/Vessel0history'
-
+import axios from 'axios'
 
 
 const VesselInfo = () => {
 
-  const [ vessel, setVessel ] = useState([])
+  const [ vessels, setVessels ] = useState([])
+  const [errors, setErrors] = useState(false)
 
-  console.log('Heres the info for Vessel[0] -->', vesselInfo)
-  // console.log('Heres what Vessel[0] has been up to -->', vesselHistory)
+  useEffect(() => {
+    const getVessels = async () => {
+      try {
+        const { data } = await axios.get('https://zruqk52qub.execute-api.us-east-1.amazonaws.com/v3/vessels/positions/',
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "*",
+              "Access-Control-Allow-Headers": "*",
+              "Access-Control-Allow-Credentials": true,
+              "Content-Type": "application/json",
+              "x-api-key": "OdYTEpiTcrg5syMlp5Fz5J7FEjYxxF1cHXXdFF30",
+            },
+          }
+        )
+        console.log('🏆 Got the vessels data???', data)
+        setVessels(data)
 
-  if (vesselInfo.mmsi)
+      } catch (error) {
+        console.log('🥺 error getting your vessel data 🥺', error)
+        setErrors(true)
+      }
+    }
+    getVessels()
+  }, [])
 
+  console.log('vessels ->', vessels)
 
   return (
-    <Container className='map-search-content'>
-      <h2>Vessel Info</h2>
+    <Container>
+      <h4>Vessel info</h4>
     </Container>
   )
 }

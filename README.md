@@ -1,12 +1,29 @@
-# Getting Started with Create React App
+# Geollect technical test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of contents
 
-## Available Scripts
+1. [Project overview](README.md#project-4---women-that-shred)
+2. [Brief](README.md#brief)
+3. [Run Instructions](README.md#brief)
+4. [Technologies](README.md#technologies)
+5. [Future improvements](README.md#key-learning--future-improvements)
 
-In the project directory, you can run:
+# Project 4 - ‘Plain-sailing’
+Plain-sailing is a website for clients to track the locations of their vessels, as well as gather specific information about each vessel & its history. It is created with Geollect's brand styling in mind in order to present a new product that is brand-consistent. Different types of vessels (without the API I made these up), show on the map with different icons for easy distinction. I couldn't resist a few bad puns - these wouldn't persist into production.
 
-### `npm start`
+## Brief
+A 'client' has come forward and has asked us to deliver them a POC.
+
+* The client would like to be able to see the locations of their 10 vessels on an interactive map.
+* After clicking a vessel, the client wants to be presented with additional vessel information
+* The client would like to be able to see where their vessel has been over the last 7 days
+* The client would like the application to be written in typescript and react
+* The client would like you to use MapBox GL.
+* The client would like to easily differentiate between different vessel types on the map
+
+
+## Run instructions
+For this project I have used yarn package manager. To run the code in your local host, please open up a terminal within the main project directory ('Plain-sailing') and run `yarn start`. You may also use `npm start`.
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -14,57 +31,14 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+## Technologies
+Mapbox GL | React.js | Javascript | SASS | Axios 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Future improvements
+* Firstly, I would convert to TypeScript - I have not used this language before, I have looked into it & am confident I would pick it up quickly
+* I did not manage to get the Vessel History up & running - I can pull it through but for some reason, not onClick of the 'See History' button
+* Ideally, I would also have liked to create a function that made the map load on the centre of all points, to make it dynamic across users
+* I would also have liked to have componentised the mapbox functions, but couldn't immediately see how this was done without forcing errors(see helpers/MapFunctions)
+* I was also planning on using a flag api (see helpers/GetFlags) to bring in relevant country flags
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
