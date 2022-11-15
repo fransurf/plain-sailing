@@ -9,7 +9,6 @@ import Container from 'react-bootstrap/Container'
 import vesselsGeoJSONObj from '../helpers/DataToGeoJson'
 import historyGeoJSONObj from '../helpers/HistoryToGeoJson'
 import vesselInfo from '../data/Vessel0info'
-import vesselHistory from '../data/Vessel0history'
 
 import CountryFlags from '../helpers/GetFlags'
 
@@ -61,16 +60,15 @@ const MapVessels = () => {
         type: 'geojson',
         data: historyGeoJSONObj
       })
-      
+
       vesselsList(vesselsGeoJSONObj)
       addMarker()
       vesselsList()
-
     })
   })
 
 
-  // * Function to add custom markers to map at vessel locations
+  // * CUSTOM MARKERS FOR ALL VESSE LOCATIONS
   const addMarker = () => {
     for (const marker of vesselsGeoJSONObj.features) {
       // Create a div with marker-mmsi id and marker class
@@ -104,21 +102,21 @@ const MapVessels = () => {
     }
   }
 
-  // * Function to add custom markers to map at vessel locations
+  // * CUSTOM MARKERS FOR VESSEL HISTORY
   const addHistory = () => {
     for (const historyMarker of historyGeoJSONObj.features) {
-      const el = document.createElement('div')
-      el.className = `history-marker`
-      el.id = `history-${historyMarker.mmsi}`
+      const el2 = document.createElement('div')
+      el2.className = `history-marker`
+      el2.id = `history-${historyMarker.mmsi}`
 
-      new mapboxgl.Marker(el, { offset: [0, -23] })
+      new mapboxgl.Marker(el2, { offset: [0, -23] })
         .setLngLat(historyMarker.geometry.coordinates)
         .addTo(map.current)
     }
   }
 
 
-  // * Adds vessel info to listings list & handles click
+  // * ADD VESSEL INFO TO VESSEL LISTINGS SIDEBAR
   const vesselsList = (vesselsGeoJSONObj) => {
     for (const vessel of vesselsGeoJSONObj.features) {
       // * Add new listing div for each vessel
@@ -127,17 +125,14 @@ const MapVessels = () => {
 
       // * Assign mmsi id & item class to listing
       listing.id = `listing-${vessel.properties.mmsi}`
-      // console.log('listing id --->', listing.id)
       listing.className = 'item'
 
-      // * Add a link to the vessel??
+      // * Add a link to the vessel
       const link = listing.appendChild(document.createElement('a'))
       link.href = '#'
       link.className = 'title'
       link.id = `link-${vessel.properties.mmsi}`
-
-      const nicerName = `Vessel No.${vessel.properties.name.match(/\d+/)[0]}`
-      link.innerHTML = `${nicerName}`
+      link.innerHTML = `Vessel No.${vessel.properties.name.match(/\d+/)[0]}`
 
       // * Function to get date info
       const longDate = vessel.properties.timestamp
@@ -158,8 +153,9 @@ const MapVessels = () => {
       location.classList.add('vessel-details', 'location')
 
       // Handle click on link
-      link.addEventListener('click', function () {
+      link.addEventListener('click', () => {
         for (const vessel of vesselsGeoJSONObj.features) {
+          // if (this.item === undefined) return
           if (this.id === `link-${vessel.properties.mmsi}`) {
             flyToVessel(vessel)
             displayPopUp(vessel)
@@ -172,7 +168,6 @@ const MapVessels = () => {
         this.parentNode.classList.add('active')
       })
     }
-    // Recentre map on listings.title click
     recentreMap()
   }
 
@@ -197,18 +192,6 @@ const MapVessels = () => {
       const popUps = document.getElementsByClassName('mapboxgl-popup')
       if (popUps[0]) popUps[0].remove()
     })
-
-    // ! ATTEMPT AT BUTTON CLOSE
-    // const closeButtons = document.getElementsByClassName('mapboxgl-popup-close-button')
-    // for (const button of closeButtons){
-    //   button.addEventListener('click', () => {
-    //     console.log('⭐️ clicked')
-    //     map.current.flyTo({
-    //       center: [-3.0370, 53.8167],
-    //       zoom: 5,
-    //     })
-    //   })
-    // }
   }
 
   // Display popup & remove existing popup
@@ -222,42 +205,43 @@ const MapVessels = () => {
       .setHTML(`<h3>Vessel No.${currentFeature.properties.name.match(/\d+/)[0]}</h3>
       <h4><b>Coordinates:</b> ${currentFeature.properties.lat.toFixed(2)}°N, ${currentFeature.properties.long.toFixed(2)}°E</h4>
       <h4><b>Travelling:</b> ${currentFeature.properties.speed} knots, heading ${currentFeature.properties.heading}°N</h4>
-      <h4><a href='/' className='show-history'>See history</a></h4>`)
+      <h4><a href='#' className='show-history'>See history</a></h4>`)
       .addTo(map.current)
 
-    // ! Attempt at displaying history
-    // const displayHistory = () => {
-    //   const showHistory = document.getElementsByClassName('show-history')
-    //   for (const history of showHistory){
-    //     showHistory.addEventListener('click', (e) => {
-    //       map.current.flyTo({
-    //         center: [-3.0370, 53.8167],
-    //         zoom: 5,
-    //       })
-    //       console.log('WHY ARENT YOU ADDING MY HISTORY MARKERS??')
-    //       displayHistory()
-    //     })
-    //   }
-    // }
-    
-    // ! Attempt at placing if statement for stationary vessels
-    // const popUpsContent = document.getElementsByClassName('mapboxgl-popup-content')
-    // console.log('this is mmy popup content --->', popUpsContent)
-    // const speed = popUpsContent.appendChild(document.createElement('p'))
-    // if (currentFeature.properties.speed >= 0.1) {
-    //   speed.innerHTML = `Travelling: ${currentFeature.properties.speed} knots, heading ${currentFeature.properties.heading}°N`
-    // } else {
-    //   speed.innerHTML = 'Travelling: This vessel was stationary'
-    // }
-    // console.log('this is mmy popup content --->', popUpsContent)
-
-    // ! SET FLAG!!!
-    // for (const info of vesselInfo) {
-    //   if (currentFeature.properties.name === info.name) {
-    //   }
-    // }
+    // Close popup on X-click & recentre
+    const closeButtons = document.getElementsByClassName('mapboxgl-popup-close-button')
+    for (const button of closeButtons) {
+      button.addEventListener('click', (e) => {
+        map.current.flyTo({
+          center: [-3.0370, 53.8167],
+          zoom: 5,
+        })
+      })
+    }
   }
 
+  // ! Attempt at displaying history
+  // const displayHistory = () => {
+  //   const showHistory = document.getElementsByClassName('show-history')
+  //   for (const history of showHistory) {
+  //     console.log('⭐️ clicked')
+  //     history.addEventListener('click', (e) => {
+  //       console.log('⭐️ clicked')
+  //       map.current.flyTo({
+  //         center: [-3.0370, 53.8167],
+  //         zoom: 5,
+  //       })
+  //       console.log('WHY ARENT YOU ADDING MY HISTORY MARKERS??')
+  //     })
+  //   }
+  // }
+
+
+  // ! SET FLAG!!!
+  // for (const info of vesselInfo) {
+  //   if (currentFeature.properties.name === info.name) {
+  //   }
+  // }
 
 
   return (

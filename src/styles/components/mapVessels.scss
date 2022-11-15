@@ -121,7 +121,12 @@ h2 {
 
 /* Marker tweaks */
 .mapboxgl-popup-close-button {
-  display: none;
+  display: block;
+  font-size: 2em;
+  margin-top: -10px;
+  padding-top: 0;
+  align-items: center;
+  color: $geo-pale-green;
 }
 
 .mapboxgl-popup-content {
@@ -182,7 +187,7 @@ h2 {
 }
 
 // HISTORY MARKER
-.history-marker .history-active {
+.history-marker {
   height: 56px;
   width: 56px;
   background-image: url('../../assets/ships/anchor.png');
