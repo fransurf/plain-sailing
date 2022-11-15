@@ -24,8 +24,8 @@ const MapVessels = () => {
 
   // CountryFlags()
 
-  console.log('Heres the info for Vessel[0] -->', vesselInfo)
-  console.log('Heres what Vessel[0] has been up to -->', vesselHistory)
+  // console.log('Heres the info for Vessel[0] -->', vesselInfo)
+  // console.log('Heres what Vessel[0] has been up to -->', vesselHistory)
 
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -97,6 +97,7 @@ const MapVessels = () => {
 
       // * Assign mmsi id & item class to listing
       listing.id = `listing-${vessel.properties.mmsi}`
+      // console.log('listing id --->', listing.id)
       listing.className = 'item'
 
       // * Add a link to the vessel??
@@ -115,12 +116,24 @@ const MapVessels = () => {
 
       // * ADD ADDITIONAL DETAILS
       const details = listing.appendChild(document.createElement('div'))
-      details.innerHTML = `Last recorded at coordinates (${vessel.properties.lat.toFixed(2)}, ${vessel.properties.long.toFixed(2)}) on ${useableDate}`;
-      if (vessel.properties.speed >= 0.1) {
-        details.innerHTML += ` | Travelling at ${vessel.properties.speed} knots, heading ${vessel.properties.heading} deg north`
-      } else {
-        details.innerHTML += ' | This vessel was stationary'
+      for (const info of vesselInfo) {
+        if (vessel.properties.name === info.name) {
+          const typeFlag = details.appendChild(document.createElement('p'))
+          typeFlag.innerHTML = `${info.type} | ${info.flag}`
+          typeFlag.classList.add('vessel-details', 'type', 'flag')
+        }
       }
+      const location = details.appendChild(document.createElement('p'))
+      // const speed = details.appendChild(document.createElement('p'))
+      location.innerHTML = `Last recorded at ${vessel.properties.lat.toFixed(2)}°N, ${vessel.properties.long.toFixed(2)}°E on ${useableDate}`
+      // if (vessel.properties.speed >= 0.1) {
+      //   speed.innerHTML = `Travelling: ${vessel.properties.speed} knots, heading ${vessel.properties.heading}°N`
+      // } else {
+      //   speed.innerHTML = 'This vessel was stationary'
+      // }
+      location.classList.add('vessel-details', 'location')
+      // speed.classList.add('vessel-details', 'location')
+
 
       // Handle click on link
       link.addEventListener('click', function () {
@@ -171,8 +184,28 @@ const MapVessels = () => {
 
     const popup = new mapboxgl.Popup({ closeOnClick: false })
       .setLngLat(currentFeature.geometry.coordinates)
-      .setHTML(`<h3>Vessel No.${currentFeature.properties.name.match(/\d+/)[0]}</h3><h4>Coordinates (${currentFeature.properties.lat.toFixed(2)}, ${currentFeature.properties.long.toFixed(2)})</h4>`)
+      .setHTML(`<h3>Vessel No.${currentFeature.properties.name.match(/\d+/)[0]}</h3>
+      <h4><b>Coordinates:</b> ${currentFeature.properties.lat.toFixed(2)}°N, ${currentFeature.properties.long.toFixed(2)}°E</h4><h4><b>Travelling:</b> ${currentFeature.properties.speed} knots, heading ${currentFeature.properties.heading}°N`)
       .addTo(map.current)
+
+    // ! Attempt at placing if statement for stationary vessels
+    const popUpsContent = document.getElementsByClassName('mapboxgl-popup-content')
+    console.log('this is mmy popup content --->', popUpsContent)
+    const speed = popUpsContent.appendChild(document.createElement('p'))
+    if (currentFeature.properties.speed >= 0.1) {
+      speed.innerHTML = `Travelling: ${currentFeature.properties.speed} knots, heading ${currentFeature.properties.heading}°N`
+    } else {
+      speed.innerHTML = 'Travelling: This vessel was stationary'
+    }
+    console.log('this is mmy popup content --->', popUpsContent)
+
+
+
+    // SET FLAG!!!
+    // for (const info of vesselInfo) {
+    //   if (currentFeature.properties.name === info.name) {
+    //   }
+    // }
   }
 
 

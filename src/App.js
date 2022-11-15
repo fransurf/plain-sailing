@@ -5,6 +5,7 @@
 // * IMPORTING COMPONENTS
 import NavBar from './components/NavBar'
 import MapVessels from './components/MapVessels'
+import VesselInfo from './components/VesselInfo'
 
 // import VesselInfo from './components/VesselInfo'
 
@@ -15,6 +16,7 @@ function App() {
       <NavBar />
       <h1 className='page-title'> ⚓️🚢 --- Plain Sailing --- 🚢⚓️ </h1>
       <MapVessels />
+      {/* <VesselInfo /> */}
     </main>
   )
 }
