@@ -116,7 +116,7 @@ const MapVessels = () => {
   }
 
 
-  // * ADD VESSEL INFO TO VESSEL LISTINGS SIDEBAR
+  // * ADD VESSEL INFO TO VESSEL LISTINGS SIDEBAR & HANDLES CLICK
   const vesselsList = (vesselsGeoJSONObj) => {
     for (const vessel of vesselsGeoJSONObj.features) {
       // * Add new listing div for each vessel
@@ -153,7 +153,7 @@ const MapVessels = () => {
       location.classList.add('vessel-details', 'location')
 
       // Handle click on link
-      link.addEventListener('click', () => {
+      link.addEventListener('click', function () {
         for (const vessel of vesselsGeoJSONObj.features) {
           // if (this.item === undefined) return
           if (this.id === `link-${vessel.properties.mmsi}`) {
