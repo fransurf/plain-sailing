@@ -106,7 +106,6 @@ const MapVessels = () => {
     }
   }
 
-
   // * ADD VESSEL INFO TO VESSEL LISTINGS SIDEBAR & HANDLES CLICK
   const vesselsList = (vesselsGeoJSONObj) => {
     for (const vessel of vesselsGeoJSONObj.features) {
