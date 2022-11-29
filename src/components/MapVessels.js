@@ -227,15 +227,12 @@ const MapVessels = () => {
 
       // Remove Vessel markers EXCEPT currentVessel
       const currentMarkers = document.getElementsByClassName('marker')
-      // console.log('currentMarkers--->', currentMarkers)
       if (currentMarkers !== null) {
         for (var i = currentMarkers.length - 1; i >= 0; i--) {
-          // console.log('marker --->', currentMarkers[i])
           if (currentMarkers[i].id !== showHistory.parentNode.id)
             currentMarkers[i].remove()
         }
       }
-
       addHistory()
     })
   }
