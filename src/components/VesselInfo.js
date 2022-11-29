@@ -11,7 +11,7 @@ const VesselInfo = () => {
   useEffect(() => {
     const getVessels = async () => {
       try {
-        const { data } = await axios.get('https://zruqk52qub.execute-api.us-east-1.amazonaws.com/v3/vessels/positions/',
+        const { data } = await axios.get('https://zruqk52qub.execute-api.us-east-1.amazonaws.com/v3/vessels/vessel_0/history/',
           {
             headers: {
               "Access-Control-Allow-Origin": "*",

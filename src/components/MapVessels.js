@@ -54,7 +54,6 @@ const MapVessels = () => {
 
       vesselsList(vesselsGeoJSONObj)
       addMarker()
-
     })
   })
 
@@ -80,6 +79,7 @@ const MapVessels = () => {
 
       // Click event => Fly to vessel, open display/remove existing & highlight in sidebar
       el.addEventListener('click', (e) => {
+        console.log('⭐️ clicked')
         flyToVessel(marker)
         displayPopUp(marker)
 
@@ -195,7 +195,7 @@ const MapVessels = () => {
       .setHTML(`<h3>Vessel No.${currentFeature.properties.name.match(/\d+/)[0]}</h3>
       <h4><b>Coordinates:</b> ${currentFeature.properties.lat.toFixed(2)}°N, ${currentFeature.properties.long.toFixed(2)}°E</h4>
       <h4><b>Travelling:</b> ${currentFeature.properties.speed} knots, heading ${currentFeature.properties.heading}°N</h4>
-      <h4><a href='#' className='show-history'>See history</a></h4>`)
+      <h4 id=marker-${currentFeature.properties.mmsi}><a href='#' id='show-history'>See history</a></h4>`)
       .addTo(map.current)
 
     // Close popup on X-click & recentre
@@ -206,25 +206,49 @@ const MapVessels = () => {
           center: [-3.0370, 53.8167],
           zoom: 5,
         })
+        removeHistory()
+        addMarker()
       })
+    }
+
+    displayHistory()
+  }
+
+  // * Display History Markers onClick
+  const displayHistory = () => {
+    const showHistory = document.getElementById('show-history')
+    // console.log('showHistory --->', showHistory.parentNode.id)
+    showHistory.addEventListener('click', (e) => {
+      console.log('⭐️ clicked')
+      map.current.flyTo({
+        center: [-3.0370, 53.8167],
+        zoom: 5,
+      })
+
+      // Remove Vessel markers EXCEPT currentVessel
+      const currentMarkers = document.getElementsByClassName('marker')
+      // console.log('currentMarkers--->', currentMarkers)
+      if(currentMarkers!==null) {
+        for (var i = currentMarkers.length - 1; i >= 0; i --){
+          // console.log('marker --->', currentMarkers[i])
+          if (currentMarkers[i].id !== showHistory.parentNode.id)
+          currentMarkers[i].remove()
+        }
+      }
+
+      addHistory()
+    })
+  }
+
+// * Remove history markers
+  const removeHistory = () => {
+    const historyMarkers = document.getElementsByClassName('history-marker')
+    if(historyMarkers!==null) {
+      for (var i = historyMarkers.length - 1; i >= 0; i --) historyMarkers[i].remove()
     }
   }
 
-  // ! Attempt at displaying history
-  // const displayHistory = () => {
-  //   const showHistory = document.getElementsByClassName('show-history')
-  //   for (const history of showHistory) {
-  //     console.log('⭐️ clicked')
-  //     history.addEventListener('click', (e) => {
-  //       console.log('⭐️ clicked')
-  //       map.current.flyTo({
-  //         center: [-3.0370, 53.8167],
-  //         zoom: 5,
-  //       })
-  //       console.log('WHY ARENT YOU ADDING MY HISTORY MARKERS??')
-  //     })
-  //   }
-  // }
+
 
   return (
     <Container id="mapbox-container" className='map-search-content'>
