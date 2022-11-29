@@ -11,7 +11,7 @@ const VesselInfo = () => {
   useEffect(() => {
     const getVessels = async () => {
       try {
-        const { data } = await axios.get('https://zruqk52qub.execute-api.us-east-1.amazonaws.com/v3/vessels/vessel_0/history/',
+        const { data } = await axios.get('https://zruqk52qub.execute-api.us-east-1.amazonaws.com/v3/vessels/position/',
           {
             headers: {
               "Access-Control-Allow-Origin": "*",
@@ -23,23 +23,26 @@ const VesselInfo = () => {
             },
           }
         )
-        console.log('🏆 Got the vessels data???', data)
+        // console.log('🏆 Got the vessels data???', data)
         setVessels(data)
 
       } catch (error) {
-        console.log('🥺 error getting your vessel data 🥺', error)
+        // console.log('🥺 error getting your vessel data 🥺', error)
         setErrors(true)
       }
     }
     getVessels()
   }, [])
 
-  console.log('vessels ->', vessels)
+  // console.log('vessels ->', vessels)
 
   return (
-    <Container>
-      <h4>Vessel info</h4>
-    </Container>
+
+    vessels
+
+  //   <Container>
+  //     <h4>Vessel info</h4>
+  //   </Container>
   )
 }
 

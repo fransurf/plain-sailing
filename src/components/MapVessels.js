@@ -135,7 +135,7 @@ const MapVessels = () => {
         if (vessel.properties.name === info.name) {
           const typeFlag = details.appendChild(document.createElement('p'))
           typeFlag.innerHTML = `${info.type} | ${info.flag}`
-          typeFlag.classList.add('vessel-details', 'type', 'flag')
+          typeFlag.classList.add('vessel-details', 'type', `${info.type.replace(/\s/g, '')}`, `${info.flag}`)
         }
       }
       const location = details.appendChild(document.createElement('p'))
@@ -228,11 +228,11 @@ const MapVessels = () => {
       // Remove Vessel markers EXCEPT currentVessel
       const currentMarkers = document.getElementsByClassName('marker')
       // console.log('currentMarkers--->', currentMarkers)
-      if(currentMarkers!==null) {
-        for (var i = currentMarkers.length - 1; i >= 0; i --){
+      if (currentMarkers !== null) {
+        for (var i = currentMarkers.length - 1; i >= 0; i--) {
           // console.log('marker --->', currentMarkers[i])
           if (currentMarkers[i].id !== showHistory.parentNode.id)
-          currentMarkers[i].remove()
+            currentMarkers[i].remove()
         }
       }
 
@@ -240,11 +240,11 @@ const MapVessels = () => {
     })
   }
 
-// * Remove history markers
+  // * Remove history markers
   const removeHistory = () => {
     const historyMarkers = document.getElementsByClassName('history-marker')
-    if(historyMarkers!==null) {
-      for (var i = historyMarkers.length - 1; i >= 0; i --) historyMarkers[i].remove()
+    if (historyMarkers !== null) {
+      for (var i = historyMarkers.length - 1; i >= 0; i--) historyMarkers[i].remove()
     }
   }
 
